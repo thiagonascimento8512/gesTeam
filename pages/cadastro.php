@@ -19,12 +19,12 @@
 	<title>Novo Cadastro</title>
 	<link href="/css/reset.css" rel="stylesheet"/>
 	<link href="/css/style.css" rel="stylesheet"/>		
+	<script src="../scripts/verificar_tecla.js" type="text/javascript"></script>
 </head>
 <body>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<label for="cmp_nome">Nome:</label>
-		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required" pattern="[a-z]+"
-		onkeydown="verifica('cmp_nome')"/><br />
+		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required" pattern=""/><br />
 		
 		<label for="cmp_email">Email:</label>
 		<input type="email" name="cmp_email" id="cmp_email" required="required"/><br />
@@ -47,7 +47,7 @@
 		<label for="cmp_senha_confirm">Confirme sua senha:</label>
 		<input type="password" name="cmp_senha_confirm" id="cmp_senha_confirm" required="required"/><br />
 		
-		<input type="submit" name="salvar" value="Salvar"/>
+		<input type="submit" id="salvar" name="salvar" value="Salvar"/>
 	</form>
 	
 </body>
