@@ -19,15 +19,17 @@
 	<title>Novo Cadastro</title>
 	<link href="/css/reset.css" rel="stylesheet"/>
 	<link href="/css/style.css" rel="stylesheet"/>		
-	<script src="../scripts/verificar_tecla.js" type="text/javascript"></script>
+	<script src="../scripts/verificar_tecla.js" type="text/javascript"></script>		
 </head>
 <body>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<label for="cmp_nome">Nome:</label>
-		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required" pattern=""/><br />
+		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required"
+		pattern="^[a-zA-Zá-üÁ-Ü ]+$"/><br />
 		
 		<label for="cmp_email">Email:</label>
-		<input type="email" name="cmp_email" id="cmp_email" required="required"/><br />
+		<input type="email" name="cmp_email" id="cmp_email" required="required"
+		pattern="[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]{2,4}$"/><br />
 		
 		<label for="cmp_sexo">Sexo:</label>
 		<select id="cmp_sexo" name="cmp_sexo" required="required">
@@ -36,7 +38,7 @@
 		</select><br />
 		
 		<label for="cmp_tel">Telefone:</label>
-		<input type="tel" name="cmp_tel" id="cmp_tel" required="required"/><br />
+		<input type="tel" name="cmp_cel" id="celular" required="required"/><br />
 		
 		<label for="cmp_nasc">Data de Nascimento:</label>
 		<input type="date" name="cmp_nasc" id="cmp_nasc" required="required"/><br />
@@ -49,6 +51,5 @@
 		
 		<input type="submit" id="salvar" name="salvar" value="Salvar"/>
 	</form>
-	
 </body>
 </html>
