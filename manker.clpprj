@@ -1,3 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="C:\xampp\htdocs\manker\manker.clpprj">
-	<settings><PM_URL><![CDATA[http://localhost/manker/]]></PM_URL><PM_HOME_URL><![CDATA[http://localhost/manker/]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS></settings></project>
+	<settings><PM_URL><![CDATA[http://localhost/manker/]]></PM_URL><PM_HOME_URL><![CDATA[http://localhost/manker/]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";"/><added value=""/><lastopfiles>
+		<file name="C:\xampp\htdocs\manker\pages\cadastro.php"/>
+	</lastopfiles>
+	<errors version="5.11">
+	</errors>
+	<cakedata>
+	</cakedata>
+	<dplmenupath>
+	</dplmenupath><laravael>
+	</laravael><smartyassings>
+	</smartyassings><twigtemplate>
+	</twigtemplate><yiidata>
+	</yiidata>
+	<todoblock>
+	</todoblock>
+	<filescache>
+		<file name="C:\xampp\htdocs\manker\scripts\verificar_tecla.js" crc="1513617852"/>
+		<file name="C:\xampp\htdocs\manker\scripts\validators.php" crc="1513366493"/>
+		<file name="C:\xampp\htdocs\manker\scripts\manker.sql" crc="1513366493"/>
+		<file name="C:\xampp\htdocs\manker\scripts\manker-teste.sql" crc="1513366493"/>
+		<file name="C:\xampp\htdocs\manker\pages\login.php" crc="1513366493"/>
+		<file name="C:\xampp\htdocs\manker\pages\cadastro.php" crc="1513626312"/>
+		<file name="C:\xampp\htdocs\manker\js\scripts.js" crc="1513371399"/>
+		<file name="C:\xampp\htdocs\manker\imagens\img.txt" crc="1513366493"/>
+		<file name="C:\xampp\htdocs\manker\css\style.css" crc="1513366493"/>
+		<file name="C:\xampp\htdocs\manker\css\reset.css" crc="1513366493"/>
+	</filescache>
+</project>
