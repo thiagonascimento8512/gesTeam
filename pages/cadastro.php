@@ -1,18 +1,27 @@
 <?php 
 	if(isset($_POST['salvar'])){
-		$nome = $_POST['cmp_nome'];
-		$email = $_POST['cmp_email'];
-		$sexo = $_POST['cmp_sexo'];
-		$tel = $_POST['cmp_cel'];
-		$nasc = $_POST['cmp_nasc'];
-		$senha = $_POST['cmp_senha'];		
-		$senha_confirm = $_POST['cmp_senha_confirm'];		
+		$nome = trim($_POST['cmp_nome']);
+		$new_nome = str_replace("  ", " ", $nome);
+		
+		while(strpos($new_nome, "  ") != 0){
+			$new_nome = str_replace("  ", " ", $new_nome);
+		}
+		
+		
+		
+		$email = trim($_POST['cmp_email']);
+		$sexo = trim($_POST['cmp_sexo']);
+		$tel = trim($_POST['cmp_cel']);
+		$nasc = trim($_POST['cmp_nasc']);
+		$senha = trim($_POST['cmp_senha']);		
+		$senha_confirm = trim($_POST['cmp_senha_confirm']);		
 		
 		if ($senha == $senha_confirm && $senha == null){
 			echo "Senha inválida!";
 		} else {
 			echo "Você inseriu as seguintes informações: <br />";
-			echo "Nome: $nome"."<br />";
+			echo "Nome: $nome Tamanho: ".strlen($nome)."<br />";
+			echo "Nome Normalizado: $new_nome Tamanho: ".strlen($new_nome)."<br />";
 			echo "Email: $email"."<br />";
 			echo "Sexo: $sexo"."<br />";
 			echo "Telefone: $tel"."<br />";
@@ -42,7 +51,10 @@
 		function verificaSenha(){
 			var password = document.getElementById("cmp_senha"),
 		  		confirm_password = document.getElementById("cmp_senha_confirm");	
-			if ((password.value != confirm_password.value) || password.value == "" || password.value == null)				
+			if ((password.value != confirm_password.value) ||
+				password.value == "" ||
+				password.value == null ||
+				password.value.length < 8)				
 				$("#salvar").attr("disabled","disabled");	
 			else				
 				$("#salvar").removeAttr("disabled");	
@@ -56,11 +68,12 @@
 		<label for="cmp_nome">Nome:</label>
 		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required"
 		pattern="^[a-zA-Zá-üÁ-Ü ]+$"
-		value="<?php if(isset($_POST['salvar'])) echo $nome; ?>"/><br />
+		value="<?php if(isset($_POST['salvar'])) echo $new_nome; ?>"/><br />
 		
 		<label for="cmp_email">Email:</label>
 		<input type="email" name="cmp_email" id="cmp_email" required="required"
-		pattern="[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]{2,4}$"/><br />
+		pattern="[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]{2,4}$"
+		value="<?php if(isset($_POST['salvar'])) echo $email; ?>"/><br />
 		
 		<label for="cmp_sexo">Sexo:</label>
 		<select id="cmp_sexo" name="cmp_sexo" required="required">
@@ -70,7 +83,10 @@
 		
 		<label for="cmp_tel">Telefone:</label>
 		<input type="tel" name="cmp_cel" id="cmp_cel" required="required" placeholder="Insira apenas números..."
-		pattern="[0-9]{9,11}"/><br />
+		pattern="[0-9]{9,11}"
+		value="<?php if(isset($_POST['salvar'])) echo $tel; ?>"/>
+		<span class="form-aviso">"Ex.: 99999999999"</span>
+		<br />
 		
 		<label for="cmp_nasc">Data de Nascimento:</label>
 		<input type="date" name="cmp_nasc" id="cmp_nasc" required="required"
@@ -78,15 +94,18 @@
 		
 		<label for="cmp_senha">Senha:</label>
 		<input type="password" name="cmp_senha" id="cmp_senha" required="required"
-		pattern="[a-zA-Z0-9]{6,}" oninvalid="setCustomValidity('Você inseriu caracteres inválidos ou insuficientes!')"
+		pattern="[a-zA-Z0-9]{8,}" oninvalid="setCustomValidity('Você inseriu caracteres inválidos ou insuficientes!')"
 		onkeypress="try{setCustomValidity('')}catch(e){}"
-		onchange="try{setCustomValidity('')}catch(e){}"/><br />
+		onchange="try{setCustomValidity('')}catch(e){}"		
+		placeholder="Mínimo 8 caracteres..."/>
+		<span class="form-aviso">"Não insira letras acentuadas ou caracteres especiais."</span>
+		<br />
 		
 		<label for="cmp_senha_confirm">Confirme sua senha:</label>
 		<input type="password" name="cmp_senha_confirm" id="cmp_senha_confirm" required="required"
-		pattern="[a-zA-Z0-9]{6,}" title="Repita sua senha!"/><br />
+		pattern="[a-zA-Z0-9]{8,}" title="Repita sua senha!"/><br />
 		
-		<input type="submit" id="salvar" name="salvar" value="Salvar" />
+		<input type="submit" id="salvar" name="salvar" value="Cadastrar" />
 	</form>	
 </body>
 </html>
