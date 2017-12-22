@@ -1,6 +1,10 @@
 <codestructure version="5.13">
 <phptree>
+<<<<<<< HEAD
 <treenode node="ValidarTextoSimples;PHP:Function Name;C:\wamp64\www\manker\scripts\validators.php;f0;1;1;6;;;;vpos;;v;;r;;d34,1;;b0,0;;mtxt;;p">
+=======
+<treenode node="ValidarTextoSimples;PHP:Function Name;C:\xampp\htdocs\manker\scripts\validators.php;f0;1;1;6;;;;vpos;;v;;r;;d34,1;;b0,0;;mtxt;;p">
+>>>>>>> 3dc64c34a94441decda19d134bc50aa945e3ec81
 </treenode>
 </phptree>
 </codestructure>

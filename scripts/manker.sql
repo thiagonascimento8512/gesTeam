@@ -8,10 +8,15 @@ descricao varchar(45) not null,
 primary key(id)
 );
 
+insert into user_status(descricao) values
+('Aguardando Confirmação'),
+('Ativo'),
+('Inativo/Excluído');
+
 create table users (
 id int unsigned not null auto_increment,
 nome varchar(100) not null,
-email varchar(100) not null,
+email varchar(100) not null unique,
 sexo ENUM('f','m') not null,
 telefone varchar(20) not null,
 nascimento date not null,
