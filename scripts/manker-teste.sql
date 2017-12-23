@@ -1,4 +1,4 @@
-drop database manker;
+use manker;
 
 select * from user_status;
 

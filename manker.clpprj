@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project name="C:\xampp\htdocs\manker\manker.clpprj">
-	<settings><PM_URL><![CDATA[http://localhost/manker/]]></PM_URL><PM_HOME_URL><![CDATA[http://localhost/manker/]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";"/><added value=""/><lastopfiles>
-		<file name="C:\xampp\htdocs\manker\pages\cadastro.php"/>
+<project name="C:\wamp64\www\manker\manker.clpprj">
+	<settings><PM_URL><![CDATA[http://localhost/manker/]]></PM_URL><PM_HOME_URL><![CDATA[http://localhost/manker/]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";"/><added value="C:\wamp64\www\manker\.gitignore;"/><lastopfiles>
+		<file name="C:\wamp64\www\manker\pages\cadastro.php"/>
+		<file name="C:\wamp64\www\manker\scripts\connectvars.php"/>
 	</lastopfiles>
 	<errors version="5.11">
 	</errors>
@@ -14,19 +15,27 @@
 	</twigtemplate><yiidata>
 	</yiidata>
 	<todoblock>
+		<todofile name="C:\wamp64\www\manker\js\jquery-2.1.1.js">
+			<todo name="TODO: Now that all calls to _data and _removeData have been replaced" pos="2;3742"/>
+		</todofile>
+		<todofile name="C:\wamp64\www\manker\js\jquery.js">
+			<todo name="TODO: Now that all calls to _data and _removeData have been replaced" pos="2;3742"/>
+		</todofile>
 	</todoblock>
 	<filescache>
-		<file name="C:\xampp\htdocs\manker\scripts\verificar_tecla.js" crc="1513617852"/>
-		<file name="C:\xampp\htdocs\manker\scripts\validators.php" crc="1513366493"/>
-		<file name="C:\xampp\htdocs\manker\scripts\manker.sql" crc="1513366493"/>
-		<file name="C:\xampp\htdocs\manker\scripts\manker-teste.sql" crc="1513366493"/>
-		<file name="C:\xampp\htdocs\manker\scripts\balloon.js" crc="1513685427"/>
-		<file name="C:\xampp\htdocs\manker\pages\login.php" crc="1513366493"/>
-		<file name="C:\xampp\htdocs\manker\pages\cadastro.php" crc="1513712873"/>
-		<file name="C:\xampp\htdocs\manker\js\scripts.js" crc="1513371399"/>
-		<file name="C:\xampp\htdocs\manker\js\jquery.js" crc="1513685427"/>
-		<file name="C:\xampp\htdocs\manker\imagens\img.txt" crc="1513366493"/>
-		<file name="C:\xampp\htdocs\manker\css\style.css" crc="1513366493"/>
-		<file name="C:\xampp\htdocs\manker\css\reset.css" crc="1513366493"/>
+		<file name="C:\wamp64\www\manker\scripts\verificar_tecla.js" crc="1513642626"/>
+		<file name="C:\wamp64\www\manker\scripts\manker.sql" crc="1513978193"/>
+		<file name="C:\wamp64\www\manker\scripts\manker-teste.sql" crc="1514000196"/>
+		<file name="C:\wamp64\www\manker\scripts\connectvars.php" crc="1513997057"/>
+		<file name="C:\wamp64\www\manker\scripts\balloon.js" crc="1513650610"/>
+		<file name="C:\wamp64\www\manker\pages\login.php" crc="1513642626"/>
+		<file name="C:\wamp64\www\manker\pages\cadastro.php" crc="1514000132"/>
+		<file name="C:\wamp64\www\manker\js\scripts.js" crc="1513642626"/>
+		<file name="C:\wamp64\www\manker\js\jquery.mask.js" crc="1410399095"/>
+		<file name="C:\wamp64\www\manker\js\jquery-2.1.1.js" crc="1513987750"/>
+		<file name="C:\wamp64\www\manker\imagens\img.txt" crc="1513642626"/>
+		<file name="C:\wamp64\www\manker\css\style.css" crc="1513642626"/>
+		<file name="C:\wamp64\www\manker\css\reset.css" crc="1513642626"/>
+		<file name="C:\wamp64\www\manker\.gitignore" crc="1513983763"/>
 	</filescache>
 </project>

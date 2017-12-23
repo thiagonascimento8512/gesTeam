@@ -1,10 +1,12 @@
 <codestructure version="5.13">
 <phptree>
-<<<<<<< HEAD
-<treenode node="ValidarTextoSimples;PHP:Function Name;C:\wamp64\www\manker\scripts\validators.php;f0;1;1;6;;;;vpos;;v;;r;;d34,1;;b0,0;;mtxt;;p">
-=======
-<treenode node="ValidarTextoSimples;PHP:Function Name;C:\xampp\htdocs\manker\scripts\validators.php;f0;1;1;6;;;;vpos;;v;;r;;d34,1;;b0,0;;mtxt;;p">
->>>>>>> 3dc64c34a94441decda19d134bc50aa945e3ec81
+<treenode node="../scripts/connectvars.php;PHP:PHP Include;C:\wamp64\www\manker\pages\cadastro.php;f16;3;42;3;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+</treenode>
+<treenode node="CleanUpDB;PHP:Function Name;C:\wamp64\www\manker\scripts\connectvars.php;f1;14;2;19;;;;vpos;;v;;r;;d21,14;;b0,0;;m">
+</treenode>
+<treenode node="GetMyConnection;PHP:Function Name;C:\wamp64\www\manker\scripts\connectvars.php;f1;3;2;12;;;;vpos;;v;;r;;d27,3;;b0,0;;m">
+</treenode>
+<treenode node="VerificaVazioRegex;PHP:Function Name;C:\wamp64\www\manker\pages\cadastro.php;f3;19;4;32;;;;vpos;;v;;r;;d57,19;;b0,0;;mname_campo;;pcampo;;preg;;p">
 </treenode>
 </phptree>
 </codestructure>

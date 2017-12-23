@@ -1,4 +1,4 @@
-<?php 	
+<?php
 	if(isset($_POST['salvar'])){
 		//Variáveis de conexão com o banco de dados		
 		require_once("../scripts/connectvars.php");
@@ -27,7 +27,7 @@
 					//Verificação da string fornecida com a Regex
 					if (!preg_match($reg, $campo)){
 						global $erros;
-						$erros["$name_campo"] = "possui caracteres ou formato inválidos.";
+						$erros["$name_campo"] = "possui caracteres, formato ou valor inválidos.";
 					}					
 				}	
 			}
@@ -65,10 +65,10 @@
 			
 			//Verificação da presença do email no banco de dados
 			$verify_email = "SELECT email FROM users WHERE email = '$email'";
-			$verify_email_result = mysql_query($verify_email, GetMyConnection())
+			$verify_email_result = mysqli_query(GetMyConnection(), $verify_email)
 			or die ("Erro na verificação do email!");
 			CleanUpDB();
-			$linha_verify_email = mysql_fetch_assoc($verify_email_result);
+			$linha_verify_email = mysqli_fetch_assoc($verify_email_result);
 			if (!empty($linha_verify_email))
 				$erros["Email"] = "já está cadastrado, insira outro email ou recupere sua conta.";			
 			else 
@@ -95,7 +95,7 @@
 			#1 - Retirar os caracteres em branco das bordas
 			#2 - Verificar se a string fornecida encontra-se 
 			//   de acordo com a regex:*/		
-			$regex_tel = "/^[0-9]{9,11}$/";
+			$regex_tel = "/^\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}$/";
 			//====================Início===============================		
 			//Retira os caracteres em branco das bordas
 			$tel = trim($_POST['cmp_cel']);
@@ -109,7 +109,7 @@
 			#1 - Retirar os caracteres em branco das bordas
 			#2 - Verificar se a string fornecida encontra-se 
 			//   de acordo com a regex:		
-			$regex_nasc = '/^\d{4}-([0][1-9]|[1][0-2])-([0][1-9]|[12][0-9]|[3][01])$/';
+			$regex_nasc = '/^(19|20)\d{2}-([0][1-9]|[1][0-2])-([0][1-9]|[12][0-9]|[3][01])$/';
 			//====================Início===============================		
 			//Retira os caracteres em branco das bordas
 			$nasc = trim($_POST['cmp_nasc']);
@@ -165,7 +165,7 @@
 			$query = "INSERT INTO users(id, nome, email, sexo, telefone, nascimento, senha, data_cad, user_status) values
 						(null, '$nome', '$email', '$sexo', '$tel', '$nasc','$new_senha', NOW(), 1)";
 			
-			$exec = mysql_query($query, GetMyConnection()) or die ("Erro ao salvar dados!");	
+			$exec = mysqli_query(GetMyConnection(), $query) or die ("Erro ao salvar dados!");	
 			
 			CleanUpDB();
 			
@@ -182,7 +182,8 @@
 	<title>Novo Cadastro</title>
 	<link href="/css/reset.css" rel="stylesheet"/>
 	<link href="/css/style.css" rel="stylesheet"/>
-	<script src="../js/jquery.js" type="text/javascript"></script>
+	<script src="../js/jquery-2.1.1.js" type="text/javascript"></script>
+	<script src="../js/jquery.mask.js" type="text/javascript"></script>
 	<script src="../scripts/balloon.js" type="text/javascript"></script>
 	<script>
 		window.onload = function(){			
@@ -205,20 +206,59 @@
 				$("#salvar").removeAttr("disabled");	
 		}		
 		
+		var options =  {
+			  onKeyPress: function(phone, e, field, options) {
+			    var masks = ['(00) 0000-0000', '(00) 00000-0000'];
+			    var mask = (phone.length>14) ? masks[1] : masks[2];
+			    $('#cmp_cel').mask(mask, options);
+			}};			
+			
+		$(document).ready(function(){			
+			$('#cmp_cel').mask('(00) 0000-00000', options);
+		});
+		
+		function mask(){			
+				var tecla = event.keyCode;
+				if (tecla == 8){
+					$(document).ready(function(){
+						$('#cmp_cel').mask('(00) 0000-00000', options);
+					});	
+				}				
+			}
 	</script>
+	<style>
+		body {
+			position: relative;
+		}
+		input + span {
+			padding-right: 30px;
+		}
+		input:invalid+span:after{			
+			position: absolute;
+			content: '✖';
+			padding-left: 5px;
+			color: #8b0000;
+		}
+		input:valid+span:after {
+			position: absolute;
+			content: '✓';
+			padding-left: 5px;
+			color: #009000;
+		}		
+	</style>
 </head>
 <body>
-	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" autocomplete="on">
 		<p>Preencha as informações corretamente, pois serão necessárias caso você perca seu acesso</p>
 		<label for="cmp_nome">Nome:</label>
 		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required"
 		pattern="^[a-zA-Zá-üÁ-Ü ]+$"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nome; ?>"/><br />
+		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nome; ?>"/><span class="validity"></span><br />
 						
 		<label for="cmp_email">Email:</label>
 		<input type="email" name="cmp_email" id="cmp_email" required="required"
 		pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]{2,4}$"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $email; ?>"/><br />
+		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $email; ?>"/><span class="validity"></span><br />
 				
 		<label for="cmp_sexo">Sexo:</label>
 		<select id="cmp_sexo" name="cmp_sexo" required="required">
@@ -229,28 +269,26 @@
 		</select><br />
 					
 		<label for="cmp_tel">Telefone:</label>
-		<input type="tel" name="cmp_cel" id="cmp_cel" required="required" placeholder="Insira apenas números..."
-		pattern="^[0-9]{9,11}$"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $tel; ?>"/>
-		<span class="form-aviso">"Ex.: 99999999999"</span>
-		<br />
+		<input type="tel" name="cmp_cel" id="cmp_cel" onkeyup="mask()" maxlength="15" required="required" placeholder="Insira apenas números..."
+		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo preg_replace('/[() -]/','',$tel); ?>"
+		pattern="^[0-9() -]{14,15}$"/><span class="validity"></span><br />
 		
 		<label for="cmp_nasc">Data de Nascimento:</label>
 		<input type="date" name="cmp_nasc" id="cmp_nasc" required="required"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nasc; ?>"/><br />
+		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nasc; ?>" pattern="^[0-2]+$"/><br />
 		
 		<label for="cmp_senha">Senha:</label>
 		<input type="password" name="cmp_senha" id="cmp_senha" required="required"
 		pattern="^[^ ]{8,}$" oninvalid="setCustomValidity('Você inseriu caracteres inválidos ou insuficientes!')"
 		onkeypress="try{setCustomValidity('')}catch(e){}"
 		onchange="try{setCustomValidity('')}catch(e){}"		
-		placeholder="Mínimo 8 caracteres..."/>		
+		placeholder="Mínimo 8 caracteres..."/><span class="validity"></span>	
 		<br />
 		
 		<label for="cmp_senha_confirm">Confirme sua senha:</label>
 		<input type="password" name="cmp_senha_confirm" id="cmp_senha_confirm" required="required"
 		pattern="^[^ ]{8,}$" title="Repita sua senha!"/><br />
-		
+				
 		<input type="submit" id="salvar" name="salvar" value="Cadastrar" />
 	</form>	
 </body>
