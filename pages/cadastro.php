@@ -174,7 +174,10 @@
 			echo "Os dados foram salvos com sucesso!";			
 		}
 	}
+
+if ($save_dados_bd == FALSE){	
 ?>
+		
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -293,3 +296,6 @@
 	</form>	
 </body>
 </html>
+<?php
+	}
+?>
