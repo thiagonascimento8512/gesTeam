@@ -30,7 +30,7 @@
 		if(empty($erros)){
 			$new_senha = sha1($new_password);
 			
-			$verify_email_senha = "SELECT email FROM users WHERE email = '$email' AND senha = '$new_senha'";
+			$verify_email_senha = "SELECT email FROM users WHERE email = '$email' AND senha = '$new_senha' AND user_status = 2";
 						
 			$verify_email_senha_result = mysqli_query(GetMyConnection(), $verify_email_senha)
 			or die ("Erro na verificação do dados!");
