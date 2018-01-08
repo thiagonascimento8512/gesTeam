@@ -3,35 +3,9 @@
 		//Variáveis de conexão com o banco de dados		
 		require_once("../scripts/connectvars.php");
 		
-		  /*==================================================//
-		 //  VERIFICAÇÃO DOS DADOS FORNECIDOS NO FORMULÁRIO  //
-		//==================================================*/
-			//Array para armazenar as não-validação dos campos
-			$erros;
-			
-			//Armazenará TRUE caso os dados tiverem sido armazenados
-			//	sucesso no bando de dados
-			//	Obs.: Será útil para carregar ou não os valores nos
-			//	campos do formulário
-			$save_dados_bd = FALSE;			
-						
-			//Verifica se o campo está vazio e compara com a Regex
-			//Retorna 1 para vazio e 2 para padrão inconsistente
-			function VerificaVazioRegex($name_campo, $campo, $reg){
-				//Verifica se o campo possui conteúdo para poder verificar a Regex
-				if (empty($campo) || $campo == null || $campo == ""){				
-					global $erros;
-					$erros["$name_campo"] = "não pode ficar vazio.";					
-				}				
-				else {
-					//Verificação da string fornecida com a Regex
-					if (!preg_match($reg, $campo)){
-						global $erros;
-						$erros["$name_campo"] = "possui caracteres, formato ou valor inválidos.";
-					}					
-				}	
-			}
-						
+		//Verificação dos campos
+		require_once("../scripts/verify_empty_regex.php");
+		  
 			//------------------== NOME ==-----------------------		
 			//==================REQUISITOS=======================
 			#1 - Retirar os caracteres em branco das bordas
@@ -64,15 +38,17 @@
 			$email = trim($_POST['cmp_email']);
 			
 			//Verificação da presença do email no banco de dados
-			$verify_email = "SELECT email FROM users WHERE email = '$email'";
-			$verify_email_result = mysqli_query(GetMyConnection(), $verify_email)
-			or die ("Erro na verificação do email!");
-			CleanUpDB();
-			$linha_verify_email = mysqli_fetch_assoc($verify_email_result);
-			if (!empty($linha_verify_email))
-				$erros["Email"] = "já está cadastrado, insira outro email ou recupere sua conta.";			
-			else 
-				VerificaVazioRegex("Email", $email, $regex_email);
+			if (preg_match($regex_email, $email)){
+				$verify_email = "SELECT email FROM users WHERE email = '$email'";
+				$verify_email_result = mysqli_query(GetMyConnection(), $verify_email)
+				or die ("Erro na verificação do email!");
+				CleanUpDB();
+				$linha_verify_email = mysqli_fetch_assoc($verify_email_result);
+				if (!empty($linha_verify_email))
+					$erros["Email"] = "já está cadastrado, insira outro email ou recupere sua conta.";			
+				else 
+					VerificaVazioRegex("Email", $email, $regex_email);	
+			}			
 			//----------------=Fim - Email=---------------------------
 			
 					
@@ -95,7 +71,7 @@
 			#1 - Retirar os caracteres em branco das bordas
 			#2 - Verificar se a string fornecida encontra-se 
 			//   de acordo com a regex:*/		
-			$regex_tel = "/^\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}$/";
+			$regex_tel = "/^\([0-9]{2}\)\s[0-9]{4,5}-[0-9]{4,5}$/";
 			//====================Início===============================		
 			//Retira os caracteres em branco das bordas
 			$tel = trim($_POST['cmp_cel']);
@@ -171,13 +147,11 @@
 			
 			$save_dados_bd = TRUE;	
 			
-			echo "Os dados foram salvos com sucesso!";			
+			echo "Os dados foram salvos com sucesso!";
+			
 		}
 	}
-
-if ($save_dados_bd == FALSE){	
-?>
-		
+?>	
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -194,7 +168,7 @@ if ($save_dados_bd == FALSE){
 	  		confirm_password = document.getElementById("cmp_senha_confirm");	
 			password.onkeyup = verificaSenha;
 			confirm_password.onkeyup = verificaSenha;			
-			$("#salvar").attr("disabled","disabled");
+			$("#salvar").attr("disabled","disabled");			
 		}
 		
 		function verificaSenha(){
@@ -227,7 +201,7 @@ if ($save_dados_bd == FALSE){
 						$('#cmp_cel').mask('(00) 0000-00000', options);
 					});	
 				}				
-			}
+		}
 	</script>
 	<style>
 		body {
@@ -253,49 +227,101 @@ if ($save_dados_bd == FALSE){
 <body>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" autocomplete="on">
 		<p>Preencha as informações corretamente, pois serão necessárias caso você perca seu acesso</p>
+		
 		<label for="cmp_nome">Nome:</label>
-		<input type="text" name="cmp_nome" id="cmp_nome" autofocus="autofocus" required="required"
-		pattern="^[a-zA-Zá-üÁ-Ü ]+$"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nome; ?>"/><span class="validity"></span><br />
+		<input
+			type="text"
+			name="cmp_nome"
+			id="cmp_nome"
+			autofocus="autofocus"
+			required="required"
+			pattern="^[a-zA-Zá-üÁ-Ü ]+$"
+			value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nome; ?>"
+		/>
+		<span class="validity"></span><br />
+			
 						
 		<label for="cmp_email">Email:</label>
-		<input type="email" name="cmp_email" id="cmp_email" required="required"
-		pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]{2,4}$"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $email; ?>"/><span class="validity"></span><br />
+		<input
+			type="email"
+			name="cmp_email"
+			id="cmp_email"
+			required="required"
+			pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z0-9_.-]{2,4}$"
+			value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $email; ?>"
+		/>
+		<span class="validity"></span><br />
+		
 				
 		<label for="cmp_sexo">Sexo:</label>
-		<select id="cmp_sexo" name="cmp_sexo" required="required">
+		<select
+			id="cmp_sexo"
+			name="cmp_sexo"
+			required="required">
 			<option value="m"
 			<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE && $sexo == 'm') echo 'selected="selected"'; ?>>Masculino</option>
 			<option value="f"
 			<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE && $sexo == 'f') echo 'selected="selected"'; ?>>Feminino</option>
 		</select><br />
+			
 					
 		<label for="cmp_tel">Telefone:</label>
-		<input type="tel" name="cmp_cel" id="cmp_cel" onkeyup="mask()" maxlength="15" required="required" placeholder="Insira apenas números..."
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo preg_replace('/[() -]/','',$tel); ?>"
-		pattern="^[0-9() -]{14,15}$"/><span class="validity"></span><br />
+		<input
+			type="tel"
+			name="cmp_cel"
+			id="cmp_cel"
+			onkeyup="mask()"
+			maxlength="15"
+			required="required"
+			placeholder="Insira apenas números..."
+			value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo preg_replace('/[() -]/','',$tel); ?>"
+			pattern="^[0-9() -]{14,15}$"
+		/>
+		<span class="validity"></span><br />
+		
 		
 		<label for="cmp_nasc">Data de Nascimento:</label>
-		<input type="date" name="cmp_nasc" id="cmp_nasc" required="required"
-		value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nasc; ?>" pattern="^[0-2]+$"/><br />
+		<input
+			type="date"
+			name="cmp_nasc"
+			id="cmp_nasc"
+			required="required"
+			value="<?php if(isset($_POST['salvar']) && $save_dados_bd == FALSE) echo $nasc; ?>"
+			pattern="^[0-2]+$"
+		/><br />
+		
 		
 		<label for="cmp_senha">Senha:</label>
-		<input type="password" name="cmp_senha" id="cmp_senha" required="required"
-		pattern="^[^ ]{8,}$" oninvalid="setCustomValidity('Você inseriu caracteres inválidos ou insuficientes!')"
-		onkeypress="try{setCustomValidity('')}catch(e){}"
-		onchange="try{setCustomValidity('')}catch(e){}"		
-		placeholder="Mínimo 8 caracteres..."/><span class="validity"></span>	
-		<br />
+		<input
+			type="password"
+			name="cmp_senha"
+			id="cmp_senha"
+			required="required"
+			pattern="^[^ ]{8,}$"
+			oninvalid="setCustomValidity('Você inseriu caracteres inválidos ou insuficientes!')"
+			onkeypress="try{setCustomValidity('')}catch(e){}"
+			onchange="try{setCustomValidity('')}catch(e){}"		
+			placeholder="Mínimo 8 caracteres..."
+		/>
+		<span class="validity"></span><br />
+		
 		
 		<label for="cmp_senha_confirm">Confirme sua senha:</label>
-		<input type="password" name="cmp_senha_confirm" id="cmp_senha_confirm" required="required"
-		pattern="^[^ ]{8,}$" title="Repita sua senha!"/><br />
+		<input
+			type="password"
+			name="cmp_senha_confirm"
+			id="cmp_senha_confirm"
+			required="required"
+			pattern="^[^ ]{8,}$"
+			title="Repita sua senha!"
+		/><br />
 				
-		<input type="submit" id="salvar" name="salvar" value="Cadastrar" />
+		<input
+			type="submit"
+			id="salvar"
+			name="salvar"
+			value="Cadastrar"
+		/>
 	</form>	
 </body>
 </html>
-<?php
-	}
-?>
